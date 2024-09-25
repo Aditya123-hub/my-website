@@ -1,6 +1,3 @@
-// Simple script to show that the site is interactive.
-console.log('Welcome to Aditya Sharma Acharya’s hacker portfolio site!');
-
 const terminalOutput = document.getElementById("output");
 const inputField = document.getElementById("input");
 let commandHistory = [];
