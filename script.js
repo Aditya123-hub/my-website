@@ -8,7 +8,7 @@ const rickRollUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
 // Command List and Descriptions
 const commands = {
-    "whois": "Who is Aditya?",
+    "whois": "Who is Aditya Sharma Acharya?",
     "whoami": "Who are you?",
     "projects": "View coding projects",
     "social": "Display social networks",
@@ -24,7 +24,8 @@ printToTerminal("Welcome to my interactive web terminal.\nFor a list of availabl
 
 // Command handlers
 function handleCommand(command) {
-    // Echo user command without changing color
+    var command = command.trim();
+    command = command.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
     terminalOutput.innerHTML += `<div>${document.getElementById("prompt").innerText} ${command}</div>`;
     
     commandHistory.push(command);
@@ -44,7 +45,7 @@ function handleCommand(command) {
             printToTerminal("1. Bug Bounty Automation\n2. Offensive Security Tools\n3. Kali Linux Exploitation Techniques", "output-text");
             break;
         case "social":
-            printToTerminal("GitHub: github.com/aditya\nTwitter: twitter.com/aditya\nLinkedIn: linkedin.com/in/aditya", "output-text");
+            printToTerminal("GitHub: github.com/Aditya123-hub\nTwitter: twitter.com/aditya\nLinkedIn: linkedin.com/in/aditya", "output-text");
             break;
         case "clear":
             terminalOutput.innerHTML = "";  // Clear all output
