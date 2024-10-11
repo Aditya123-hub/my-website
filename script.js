@@ -24,9 +24,12 @@ printToTerminal("Welcome to my interactive web terminal.\nFor a list of availabl
 
 // Command handlers
 function handleCommand(command) {
-    var command = command.trim();
-    command = command.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
-    terminalOutput.innerHTML += `<div>${document.getElementById("prompt").innerText} ${command}</div>`;
+    command = command.trim();
+    
+    // Use textContent instead of innerHTML to avoid XSS
+    const commandOutput = document.createElement("div");
+    commandOutput.textContent = `${document.getElementById("prompt").innerText} ${command}`;
+    terminalOutput.appendChild(commandOutput);
     
     commandHistory.push(command);
     historyIndex = commandHistory.length;
@@ -39,7 +42,7 @@ function handleCommand(command) {
             printToTerminal("You are a guest viewing Aditya Acharya's portfolio.", "output-text");
             break;
         case "whois":
-            printToTerminal("Aditya Acharya is a ethical hacker.", "output-text");
+            printToTerminal("Aditya Acharya is an ethical hacker.", "output-text");
             break;
         case "projects":
             printToTerminal("1. Bug Bounty Automation\n2. Offensive Security Tools\n3. Kali Linux Exploitation Techniques", "output-text");
@@ -65,6 +68,7 @@ function displayHelp() {
     Object.entries(commands).forEach(([cmd, desc]) => {
         helpOutput += `<div><span class="command">${cmd.padEnd(15)}</span><span class="output-text">${desc}</span></div>`;
     });
+    // Safely append helpOutput as HTML since this part is trusted
     terminalOutput.innerHTML += helpOutput;
 }
 
@@ -76,7 +80,7 @@ function printToTerminal(text, className = "output-text") {
     let index = 0;
     function typeCharacter() {
         if (index < text.length) {
-            outputLine.innerHTML += text.charAt(index);
+            outputLine.textContent += text.charAt(index);
             index++;
             setTimeout(typeCharacter, 30); // Adjusted typing effect for smoother speed
         }
